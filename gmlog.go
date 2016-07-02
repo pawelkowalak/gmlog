@@ -14,6 +14,7 @@ import (
 	expFont "golang.org/x/mobile/exp/font"
 	"golang.org/x/mobile/exp/gl/glutil"
 	"golang.org/x/mobile/geom"
+	"os"
 	"sync"
 )
 
@@ -35,15 +36,37 @@ func New(images *glutil.Images, limit int) *Logger {
 	}
 }
 
-// Printf adds new message format and optional arguments to logger buffer.
-func (l *Logger) Printf(msg string, args ...interface{}) {
+// Output adds formatted message to the buffer.
+func (l *Logger) Output(msg string) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	if len(l.buf) > 4 {
 		l.buf = l.buf[1:]
 	}
-	l.buf = append(l.buf, fmt.Sprintf(msg, args...))
-	fmt.Printf(msg, args...)
+	l.buf = append(l.buf, msg)
+	fmt.Println(msg)
+}
+
+// Printf adds new message format and optional arguments to logger buffer.
+func (l *Logger) Printf(format string, v ...interface{}) {
+	l.Output(fmt.Sprintf(format, v...))
+}
+
+// Print adds new message to logger buffer.
+func (l *Logger) Print(v ...interface{}) {
+	l.Output(fmt.Sprint(v...))
+}
+
+// Fatal is equivalent to l.Print() followed by a call to os.Exit(1).
+func (l *Logger) Fatal(v ...interface{}) {
+	l.Output(fmt.Sprint(v...))
+	os.Exit(1)
+}
+
+// Fatalf is equivalent to l.Printf() followed by a call to os.Exit(1).
+func (l *Logger) Fatalf(format string, v ...interface{}) {
+	l.Output(fmt.Sprintf(format, v...))
+	os.Exit(1)
 }
 
 // Draw draws all current logs at the top of the screen.

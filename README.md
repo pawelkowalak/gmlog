@@ -1,4 +1,4 @@
-Simple logging package for gomobile applications.
+Simple logging package for gomobile applications. It supports Print, Printf, Fatal and Fatalf methods.
 
 `go get github.com/viru/gmlog`
 
@@ -40,7 +40,7 @@ func onStart(glctx gl.Context, sz size.Event) {
 	images = glutil.NewImages(glctx)
 	eng = glsprite.Engine(images)
 	log = gmlog.New(images, 5)) // Pass your images to logger along with lines limit.
-    log.Printf("Initialised app") // Now you can print to your logs.
+    log.Print("Initialised app") // Now you can print to your logs.
 }
 
 func onStop() {

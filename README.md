@@ -66,4 +66,4 @@ func onPaint(glctx gl.Context, sz size.Event) {
 
 Logs are added on top of the screen (not configurable at the moment):
 
-[[https://github.com/viru/gmlog.wiki/blob/master/screenshot.png|alt=screenshot]]
+![screenshot](https://viru.github.io/gmlog/img/screenshot.png)
